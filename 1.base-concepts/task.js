@@ -24,35 +24,41 @@ function solveEquation(a, b, c) {
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
   let totalAmount;
-  let P;
-  let S;
+  // let P;
+  // let S;
 
-  if(Number.isInteger(percent)) {
-     P = percent/100;
-  }  else {
-    console.log(`Параметр percent(проценнтная ставка) содержит неправильное значение ${percent}`);
+  function getMessage(nameProperety, properety) {
+    return `Параметр "${nameProperety}" содержит неправильное значение "${properety}"`;
+  } 
+
+  if(Number.isInteger(percent) == false) {
+     return getMessage("Процентная ставка", percent);
   }
   
-  if(Number.isInteger(contribution) === false) {
-    console.log(`Параметр contribution(начальный бонус) содержит неправильное значение ${contribution}`);
+  if(Number.isInteger(contribution) == false) {
+     return getMessage("Начальный взнос", contribution);
   }
 
-  if(Number.isInteger(amount) === false) {
-    console.log(`Параметр amount(сумма кредита) содержит неправильное значение ${amount}`);
+  if(Number.isInteger(amount) == false) {
+     return getMessage("Общая стоимость", amount);
   }
 
-  if(Number.isInteger(date) === false) {
-    console.log(`Параметр date(срок в месяцах) содержит неправильное значение ${date}`);
-  }
+  let currentMonth = new Date().getMonth();
+  let currentYear = new Date().getFullYear();
 
+  let differenceYears = date.getFullYear() - currentYear;
+  let countMonth = differenceYears * 12 - currentMonth + date.getMonth();
   
-  S = amount - contribution;
-  let dateInMonth = date.getMonth();
-  let r = dateInMonth/12;
-  let mounthPayment = S * (P + (P / (((1 + P)**dateInMonth) - 1)));
+  let S = amount - contribution;
+  
+  let P = percent/12/100;
+  let mounthPayment = S * (P + (P / (((1 + P)**countMonth) - 1)));
   
   //totalAmount = S*P/P;
-  totalAmount = amount*r/(1-(1/(1+r))*dateInMonth);
+  totalAmount = S + P * mounthPayment; 
+  //S + mounthPayment + P;
+  //S / countMonth + S * P;
+  //amount*r/(1-(1/(1+r))*dateInMonth);
 
   console.log(totalAmount.toFixed(2));
   return totalAmount.toFixed(2);
