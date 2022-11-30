@@ -54,12 +54,9 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
   let P = percent/12/100;
   let mounthPayment = S * (P + (P / (((1 + P)**countMonth) - 1)));
   
-  //totalAmount = S*P/P;
-  totalAmount = S + P * mounthPayment; 
-  //S + mounthPayment + P;
-  //S / countMonth + S * P;
-  //amount*r/(1-(1/(1+r))*dateInMonth);
+  totalAmount = countMonth* mounthPayment; 
+  
 
-  console.log(totalAmount.toFixed(2));
-  return totalAmount.toFixed(2);
+  console.log(Number(totalAmount.toFixed(2)));
+  return +(totalAmount.toFixed(2));
 }
