@@ -28,18 +28,22 @@ Student.prototype.addMark = function (mark) {
 
 
 Student.prototype.getAverage = function () {
+  if(!this.marks) {
+    return 0;
+  }
   let sum = 0;
   let avg = 0;
-  for (i=0; i<this.marks.length; i++) {
+  for (let i=0; i<this.marks.length; i++) {
     sum += this.marks[i];
   }
-  return avg = sum/this.marks.length;
+  avg = sum/this.marks.length;
+  return avg;
 }
 
 Student.prototype.exclude = function (reason) {
   delete this.subject;
   delete this.marks;
-  this.exclude = reason;
+  this.excluded = reason;
 }
 
 let student1 = new Student("Jane", "female", 16);
