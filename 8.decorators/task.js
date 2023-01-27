@@ -35,8 +35,13 @@ function cachingDecoratorNew(func) {
 
 function debounceDecoratorNew(func, time) {
   let timer = null;
+  let count = 0;
+  let allCount = 0;
+
+  count++;
 
   function wrapper(...args) {
+    allCount++;
     if (timer === null) {
       func(...args);
     }
@@ -46,35 +51,35 @@ function debounceDecoratorNew(func, time) {
   return wrapper;
 }
 
-function debounceDecorator2(func) {
-  let timer = null;
-  wrapper.count = 0;
+// function debounceDecorator2(func) {
+//   let timer = null;
+//   wrapper.count = 0;
 
-  function wrapper(...args) {
-    if (timer === null) {
-      func(...args);
-    }
-    clearTimeout(timer);
-    timer = setTimeout(() => func(...args), ms);
-    wrapper.count++;
-  }
-  return wrapper;
-}
+//   function wrapper(...args) {
+//     if (timer === null) {
+//       func(...args);
+//     }
+//     clearTimeout(timer);
+//     timer = setTimeout(() => func(...args), ms);
+//     wrapper.count++;
+//   }
+//   return wrapper;
+// }
 
-function debounceDecorator2(func) {
-  let timer = null;
-  wrapper.count = 0;
-  wrapper.allCount = [];
+// function debounceDecorator2(func) {
+//   let timer = null;
+//   wrapper.count = 0;
+//   wrapper.allCount = [];
 
-  function wrapper(...args) {
-    if (timer === null) {
-      func(...args);
-    }
-    clearTimeout(timer);
-    timer = setTimeout(() => func(...args), ms);
-    wrapper.count++;
-  }
-  wrapper.allCount.push(count);
+//   function wrapper(...args) {
+//     if (timer === null) {
+//       func(...args);
+//     }
+//     clearTimeout(timer);
+//     timer = setTimeout(() => func(...args), ms);
+//     wrapper.count++;
+//   }
+//   wrapper.allCount.push(count);
   
-  return wrapper;
-}
+//   return wrapper;
+// }
