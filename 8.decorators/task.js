@@ -9,7 +9,6 @@ function cachingDecoratorNew(func) {
     }
 
     let result = func(...args);
-    //cache.push({'hash': hash, 'value': result});
     cache.push({hash, result});
     if(cache.length > 5) {
       cache.shift();
@@ -20,66 +19,24 @@ function cachingDecoratorNew(func) {
   return wrapper;
 }
 
-// const addThree = (a, b, c) => (a + b + c); 
-// const upgradedAddThree = cachingDecoratorNew(addThree);
-// upgradedAddThree(1, 2, 3); 
-// upgradedAddThree(1, 2, 3); 
-// upgradedAddThree(2, 2, 3); 
-// upgradedAddThree(3, 2, 3); 
-// upgradedAddThree(4, 2, 3); 
-// upgradedAddThree(5, 2, 3); 
-// upgradedAddThree(6, 2, 3); 
-// upgradedAddThree(1, 2, 3);
-
 
 
 function debounceDecoratorNew(func, time) {
   let timer = null;
-  let count = 0;
-  let allCount = 0;
-
-  count++;
+  wrapper.count = 0;
+  wrapper.allCount = 0;
 
   function wrapper(...args) {
     allCount++;
     if (timer === null) {
+      wrapper.count++;
       func(...args);
     }
     clearTimeout(timer);
-    timer = setTimeout(() => func(...args), time);
+    timer = setTimeout(() => { 
+      func(...args); 
+      wrapper.count++;
+    }, time);
   }
   return wrapper;
 }
-
-// function debounceDecorator2(func) {
-//   let timer = null;
-//   wrapper.count = 0;
-
-//   function wrapper(...args) {
-//     if (timer === null) {
-//       func(...args);
-//     }
-//     clearTimeout(timer);
-//     timer = setTimeout(() => func(...args), ms);
-//     wrapper.count++;
-//   }
-//   return wrapper;
-// }
-
-// function debounceDecorator2(func) {
-//   let timer = null;
-//   wrapper.count = 0;
-//   wrapper.allCount = [];
-
-//   function wrapper(...args) {
-//     if (timer === null) {
-//       func(...args);
-//     }
-//     clearTimeout(timer);
-//     timer = setTimeout(() => func(...args), ms);
-//     wrapper.count++;
-//   }
-//   wrapper.allCount.push(count);
-  
-//   return wrapper;
-// }
